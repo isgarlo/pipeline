@@ -5,46 +5,33 @@ cache:
   directories:
     - node_modules
 
-
- env:
-  - TEST_SUITE=unit
-  - TEST_SUITE=integration
-  - TEST_SUITE=acceptance
-
-
-# script: npm run test:$TEST_SUITE
-
-# jobs:
-#   include:
-#     - stage: deploy
-#       env: TEST_SUITE=none
-#       install: skip # bundle install is not required
-#       script: ./deploy.sh
-
 # safelist
 branches:
   only:
   - develop
 
+stages:
+  - name: lint
+    if: type = pull_request
+  - name: test (unit + integration + acceptance)
+    if: type = pull_request
+  - name: deploy
+    if: type != pull_request
+  - name: test (acceptance in dev)
+    if: type != pull_request
+
 jobs:
   include:
-    - stage: linting + unit + integration + e2e tests
-      if: type = pull_request
+    - stage: lint
       script: echo performing code analysis
-      if: type = pull_request
-      script: npm run test:$TEST_SUITE
-    - stage: deploy to aws develop
-      if: type != pull_request
+    - stage: test (unit + integration + acceptance)
+      script: echo running unit tests
+    - script: echo running integration tests
+    - script: echo running acceptance tests
+    - stage: deploy
       script: echo deploying to aws develop
-    - stage: e2e tests in develop
-      if: type != pull_request
+    - stage: test (acceptance in dev)
       script: echo running live suitable e2e tests in aws develop
-    - stage: deploy to production
-      if: branch = master AND type != pull_request
-      script: echo deploying to aws production
-    - stage: e2e tests in production
-      if: branch = master AND type != pull_request
-      script: echo running live suitable e2e tests
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
