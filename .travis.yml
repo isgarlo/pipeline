@@ -29,11 +29,11 @@ jobs:
   include:
     - stage: linting code + unit tests 
       script: echo performing code analysis
-      script: echo running unit tests
+    - script: echo running unit tests
     - stage: integration + e2e tests
       if: branch = develop
       script: echo running integration tests
-      script: echo running e2e tests
+    - script: echo running e2e tests
     - stage: deploy to aws develop
       if: branch = develop
       script: echo deploying to aws develop
