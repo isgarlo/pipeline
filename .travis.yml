@@ -1,0 +1,37 @@
+language: node_js
+node_js:
+  - node
+cache:
+  directories:
+    - node_modules
+
+
+# env:
+# - TEST_SUITE=integration
+# - TEST_SUITE=unit
+
+# script: npm run test:$TEST_SUITE
+
+# jobs:
+#   include:
+#     - stage: deploy
+#       env: TEST_SUITE=none
+#       install: skip # bundle install is not required
+#       script: ./deploy.sh
+
+jobs:
+  include:
+    - stage: unit tests
+      script: echo running unit tests
+    - stage: integration tests
+      script: echo running integration tests
+    - stage: e2e tests
+      script: echo running e2e tests
+    - stage: deploy to develop
+      script: echo deploying to develop
+
+# notifications:
+#   slack: '<account>:<token>#team-backend'
+#     on_success: change
+#     on_failure: change
+#     on_pull_requests: false
