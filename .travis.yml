@@ -27,18 +27,18 @@ branches:
 
 jobs:
   include:
-    - stage: linting code + unit tests 
+    - stage: linting code + unit tests
       script: echo performing code analysis
     - script: echo running unit tests
     - stage: integration + e2e tests
-      if: branch = develop
+      if: branch = develop AND type != pull_request
       script: echo running integration tests
     - script: echo running e2e tests
     - stage: deploy to aws develop
-      if: branch = develop
+      if: branch = develop AND type != pull_request
       script: echo deploying to aws develop
     - stage: e2e tests in develop
-      if: branch = develop
+      if: branch = develop AND type != pull_request
       script: echo running live suitable e2e tests in aws develop
     - stage: deploy to production
       if: branch = master
