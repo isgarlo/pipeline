@@ -6,10 +6,7 @@ cache:
     - node_modules
 
 
- env:
-  - TEST_SUITE=unit
-  - TEST_SUITE=integration
-  - TEST_SUITE=acceptance
+ 
 
 
 # script: npm run test:$TEST_SUITE
@@ -30,9 +27,13 @@ branches:
 jobs:
   include:
     - stage: linting + unit + integration + e2e tests
-      # if: type = pull_request
-      # script: echo performing code analysis
       if: type = pull_request
+      script: echo performing code analysis
+      if: type = pull_request
+      env:
+        - TEST_SUITE=unit
+        - TEST_SUITE=integration
+        - TEST_SUITE=acceptance
       script: npm run test:$TEST_SUITE
     - stage: deploy to aws develop
       if: type != pull_request
