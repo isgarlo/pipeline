@@ -24,13 +24,15 @@ branches:
   - develop
   # - master
 
-# stages:
-#   - name: lint & test
-#     if: type = pull_request
-#   - name: deploy to aws develop
-#     if: type != pull_request
-#   - name: e2e tests in develop
-#     if: type != pull_request
+stages:
+  - name: lint
+    if: type = pull_request
+  - name: test
+    if: type = pull_request
+  - name: deploy
+    if: type != pull_request
+  - name: e2e
+    if: type != pull_request
 
 env:
   - TEST_SUITE=unit
@@ -44,9 +46,9 @@ jobs:
     - stage: test
       script: npm run test:$TEST_SUITE
       # if: type = pull_request
-    - stage: deploy to aws develop
+    - stage: deploy
       script: echo deploying to aws develop
-    - stage: e2e tests in develop
+    - stage: e2e
       script: echo running live suitable e2e tests in aws develop
     # - stage: deploy to production
     #   if: branch = master AND type != pull_request
