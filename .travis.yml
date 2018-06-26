@@ -30,20 +30,20 @@ jobs:
     - stage: linting code + unit tests 
       script: echo performing code analysis
       script: echo running unit tests
-    - name: integration + e2e tests
+    - stage: integration + e2e tests
       if: branch = develop
       script: echo running integration tests
       script: echo running e2e tests
-    - name: deploy to aws develop
+    - stage: deploy to aws develop
       if: branch = develop
       script: echo deploying to aws develop
-    - name: e2e tests in develop
+    - stage: e2e tests in develop
       if: branch = develop
       script: echo running live suitable e2e tests in aws develop
-    - name: deploy to production
+    - stage: deploy to production
       if: branch = master
       script: echo deploying to aws production
-    - name: e2e tests in production
+    - stage: e2e tests in production
       if: branch = master
       script: echo running live suitable e2e tests
 
