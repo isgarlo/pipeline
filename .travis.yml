@@ -39,12 +39,12 @@ jobs:
     - stage: e2e tests in develop
       if: type != pull_request
       script: echo running live suitable e2e tests in aws develop
-    # - stage: deploy to production
-    #   if: branch = master
-    #   script: echo deploying to aws production
-    # - stage: e2e tests in production
-    #   if: branch = master
-    #   script: echo running live suitable e2e tests
+    - stage: deploy to production
+      if: branch = master AND type != pull_request
+      script: echo deploying to aws production
+    - stage: e2e tests in production
+      if: branch = master AND type != pull_request
+      script: echo running live suitable e2e tests
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
