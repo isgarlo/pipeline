@@ -30,8 +30,8 @@ branches:
 jobs:
   include:
     - stage: linting + unit + integration + e2e tests
-      if: type = pull_request
-      script: echo performing code analysis
+      # if: type = pull_request
+      # script: echo performing code analysis
       if: type = pull_request
       script: npm run test:$TEST_SUITE
     - stage: deploy to aws develop
