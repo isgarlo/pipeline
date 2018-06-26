@@ -32,15 +32,16 @@ branches:
 #   - name: e2e tests in develop
 #     if: type != pull_request
 
+env:
+  - TEST_SUITE=unit
+  - TEST_SUITE=integration
+  - TEST_SUITE=acceptance
+
 jobs:
   include:
     - stage: lint
       script: echo performing code analysis
     - stage: test
-      env:
-        - TEST_SUITE=unit
-        - TEST_SUITE=integration
-        - TEST_SUITE=acceptance
       script: npm run test:$TEST_SUITE
       # if: type = pull_request
     - stage: deploy to aws develop
