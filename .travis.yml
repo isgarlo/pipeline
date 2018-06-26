@@ -19,6 +19,12 @@ cache:
 #       install: skip # bundle install is not required
 #       script: ./deploy.sh
 
+# safelist
+branches:
+  only:
+  - master
+  - develop
+
 jobs:
   include:
     - stage: linting code + unit tests 
