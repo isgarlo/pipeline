@@ -16,10 +16,6 @@ stages:
   - name: lint
     if: type = pull_request
   - name: test
-    env:
-    - TEST_SUITE=unit
-    - TEST_SUITE=integration
-    - TEST_SUITE=acceptance
     if: type = pull_request
   - name: deploy
     if: type != pull_request
@@ -33,7 +29,9 @@ jobs:
     - stage: lint
       script: echo performing code analysis
     - stage: test
-      script: npm run test:$TEST_SUITE
+      script: echo running unit tests
+      script: echo running integration tests
+      script: echo running acceptance tests
     - stage: deploy
       script: echo deploying to aws develop
     - stage: e2e
