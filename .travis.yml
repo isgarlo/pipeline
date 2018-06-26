@@ -6,18 +6,6 @@ cache:
     - node_modules
 
 
- 
-
-
-# script: npm run test:$TEST_SUITE
-
-# jobs:
-#   include:
-#     - stage: deploy
-#       env: TEST_SUITE=none
-#       install: skip # bundle install is not required
-#       script: ./deploy.sh
-
 # safelist
 branches:
   only:
@@ -28,16 +16,17 @@ stages:
   - name: lint
     if: type = pull_request
   - name: test
+    env:
+    - TEST_SUITE=unit
+    - TEST_SUITE=integration
+    - TEST_SUITE=acceptance
     if: type = pull_request
   - name: deploy
     if: type != pull_request
   - name: e2e
     if: type != pull_request
 
-env:
-  - TEST_SUITE=unit
-  - TEST_SUITE=integration
-  - TEST_SUITE=acceptance
+
 
 jobs:
   include:
@@ -45,7 +34,6 @@ jobs:
       script: echo performing code analysis
     - stage: test
       script: npm run test:$TEST_SUITE
-      # if: type = pull_request
     - stage: deploy
       script: echo deploying to aws develop
     - stage: e2e
