@@ -21,14 +21,23 @@ cache:
 
 jobs:
   include:
-    - stage: unit tests
+    - stage: linting code + unit tests 
+      script: echo performing code analysis
       script: echo running unit tests
     - stage: integration tests
       script: echo running integration tests
     - stage: e2e tests
       script: echo running e2e tests
-    - stage: deploy to develop
-      script: echo deploying to develop
+    - stage: deploy to aws develop
+      script: echo deploying to aws develop
+    - stage: e2e tests in develop
+      script: echo running live suitable e2e tests
+    - name: deploy to production
+      if: branch = master
+      script: echo deploying to aws production
+    - name: e2e tests in production
+      if: branch = master
+      script: echo running live suitable e2e tests
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
