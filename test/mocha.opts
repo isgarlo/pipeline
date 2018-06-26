@@ -1,0 +1,7 @@
+###
+### mocha.opts
+###
+
+--compilers js:babel-core/register
+--recursive
+--timeout 200
