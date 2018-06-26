@@ -15,7 +15,7 @@ branches:
 stages:
   - name: lint
     if: type = pull_request
-  - name: test
+  - name: test (unit + integration + acceptance)
     if: type = pull_request
   - name: deploy
     if: type != pull_request
@@ -28,7 +28,7 @@ jobs:
   include:
     - stage: lint
       script: echo performing code analysis
-    - stage: test
+    - stage: test (unit + integration + acceptance)
       script: echo running unit tests
       script: echo running integration tests
       script: echo running acceptance tests
