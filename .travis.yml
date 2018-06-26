@@ -30,8 +30,8 @@ jobs:
       script: echo performing code analysis
     - stage: test (unit + integration + acceptance)
       script: echo running unit tests
-      script: echo running integration tests
-      script: echo running acceptance tests
+    - script: echo running integration tests
+    - script: echo running acceptance tests
     - stage: deploy
       script: echo deploying to aws develop
     - stage: e2e
