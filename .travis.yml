@@ -13,24 +13,27 @@ branches:
 stages:
   - name: lint
     if: type = pull_request
-  - name: test (unit + integration + acceptance)
+  - name: test (unit)
+    if: type = pull_request
+  - name: test (integration + acceptance)
     if: type = pull_request
   - name: deploy
     if: type != pull_request
-  - name: test (acceptance in dev)
+  - name: test (acceptance)
     if: type != pull_request
 
 jobs:
   include:
     - stage: lint
       script: echo performing code analysis
-    - stage: test (unit + integration + acceptance)
+    - stage: test (unit)
       script: echo running unit tests
-    - script: echo running integration tests
+    - stage: test (integration + acceptance)
+      script: echo running integration tests
     - script: echo running acceptance tests
     - stage: deploy
       script: echo deploying to aws develop
-    - stage: test (acceptance in dev)
+    - stage: test (acceptance)
       script: echo running live suitable e2e tests in aws develop
 
 # notifications:
