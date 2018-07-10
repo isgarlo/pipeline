@@ -5,36 +5,24 @@ cache:
   directories:
     - node_modules
 
-# safelist
-branches:
-  only:
-  - develop
-
 stages:
+  # lint and unit test on every PR to merge into develop
   - name: lint
-    if: type = pull_request
+    if: type = pull_request AND branch = develop
   - name: test (unit)
-    if: type = pull_request
-  - name: test (integration + acceptance)
-    if: type = pull_request
-  - name: deploy
-    if: type != pull_request
-  - name: test (acceptance)
-    if: type != pull_request
+    if: type = pull_request AND branch = develop
+  # make a release candidate or a release
+  - name: release
+    if: tag is present and branch = master
 
 jobs:
   include:
     - stage: lint
       script: echo performing code analysis
     - stage: test (unit)
-      script: echo running unit tests
-    - stage: test (integration + acceptance)
-      script: echo running integration tests
-    - script: echo running acceptance tests
-    - stage: deploy
-      script: echo deploying to aws develop
-    - stage: test (acceptance)
-      script: echo running live suitable e2e tests in aws develop
+      script: npm run test
+    - stage: release
+      script: if [ $TRAVIS_TAG != *RC ]; then type = prod; fi npm run release
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
