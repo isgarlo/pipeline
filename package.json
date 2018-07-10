@@ -12,9 +12,11 @@
     "mocha": "^5.2.0"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "echo testing...",
     "test:unit": "echo running unit tests",
     "test:integration": "echo running integration tests",
-    "test:acceptance": "echo running acceptance tests"
+    "test:acceptance": "echo running acceptance tests",
+    "package": "echo packaging...",
+    "release": "type=${type:=development} echo releasing"
   }
 }
