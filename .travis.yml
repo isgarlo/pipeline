@@ -11,9 +11,6 @@ stages:
     if: type = pull_request AND branch = develop
   - name: test (unit)
     if: type = pull_request AND branch = develop
-  # package when merging into develop or master and there is no tag
-  - name: package
-    if: tag IS blank and branch IN (develop, master)
   # make a release candidate or a release
   - name: release
     if: tag is present and branch = master
@@ -24,8 +21,6 @@ jobs:
       script: echo performing code analysis
     - stage: test (unit)
       script: npm run test
-    - stage: package
-      script: npm run package
     - stage: release
       script: if [ $TRAVIS_TAG != *RC ]; then type = prod; fi npm run release
 
