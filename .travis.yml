@@ -13,7 +13,7 @@ stages:
     if: type = pull_request AND branch = develop
   # make a release candidate or a release
   - name: release
-    if: tag IS present AND branch = master
+    if: tag IS present
 
 jobs:
   include:
