@@ -13,16 +13,16 @@ stages:
     if: type = pull_request AND branch = develop
   # make a release candidate or a release
   - name: release
-    if: tag is present and branch = master
+    if: tag IS present AND branch = master
 
 jobs:
   include:
     - stage: lint
       script: echo performing code analysis
     - stage: test (unit)
-      script: npm run test
+      script: echo testing...
     - stage: release
-      script: if [ $TRAVIS_TAG != *RC ]; then type = prod; fi npm run release
+      script: echo releasing...
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
