@@ -14,6 +14,8 @@ stages:
   # make a release candidate or a release
   - name: release
     if: tag IS present
+  - name: release2
+    if: tag IS present
 
 jobs:
   include:
@@ -23,6 +25,8 @@ jobs:
       script: echo testing...
     - stage: release
       script: echo releasing...
+    - stage: release2
+      script: echo releasing more...
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
