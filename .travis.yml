@@ -30,12 +30,12 @@ jobs:
       script: echo testing frontend proxy in linux...
     - stage: release
       os: osx
-      script: echo releasing osx...
+      script: ./scripts/ci/release_config.sh
     - stage: release
       os: linux
       env: CC=clang CXX=clang++ npm_config_clang=1
       compiler: clang
-      script: echo releasing linux...
+      script: ./scripts/ci/release_config.sh
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
