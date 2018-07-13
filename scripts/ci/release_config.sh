@@ -13,4 +13,4 @@ else
     type=prod
 fi
 
-yarn run release
+export type; yarn run release
