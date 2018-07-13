@@ -17,6 +17,6 @@
     "test:integration": "echo running integration tests",
     "test:acceptance": "echo running acceptance tests",
     "package": "echo packaging...",
-    "release": "echo $type"
+    "release": "echo releasing with $type config"
   }
 }
