@@ -7,22 +7,35 @@ cache:
 
 stages:
   # lint and unit test on every PR to merge into develop
-  - name: lint
+  - name: lint and unit test
     if: type = pull_request AND branch = develop
-  - name: test (unit)
+  - name: unit test (platform dependant)
     if: type = pull_request AND branch = develop
   # make a release candidate or a release
   - name: release
-    if: tag is present and branch = master
+    if: tag IS present
 
 jobs:
   include:
-    - stage: lint
-      script: echo performing code analysis
-    - stage: test (unit)
-      script: npm run test
+    - stage: lint and unit test
+      script: echo performing code analysis...
+    - script: echo unit testing...
+    - stage: unit test (platform dependant)
+      os: osx
+      script: echo testing frontend proxy in osx...
+    - stage: unit test (platform dependant)
+      os: linux
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
+      script: echo testing frontend proxy in linux...
     - stage: release
-      script: if [ $TRAVIS_TAG != *RC ]; then type = prod; fi npm run release
+      os: osx
+      script: ./scripts/ci/release_config.sh
+    - stage: release
+      os: linux
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
+      script: ./scripts/ci/release_config.sh
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
