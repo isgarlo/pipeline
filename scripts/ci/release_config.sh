@@ -6,11 +6,9 @@ echo
 
 type=development
 
-if [[ $TRAVIS_TAG == *RC ]]; then
-    echo Making a release candidate
-else
-    echo Making a release
+if [[ $TRAVIS_TAG != *RC ]]; then
     type=prod
 fi
 
+echo Making a release with $type config ...
 export type; yarn run release
