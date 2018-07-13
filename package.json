@@ -17,6 +17,6 @@
     "test:integration": "echo running integration tests",
     "test:acceptance": "echo running acceptance tests",
     "package": "echo packaging...",
-    "release": "type=${type:=development} echo releasing"
+    "release": "echo $type"
   }
 }
