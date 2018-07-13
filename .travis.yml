@@ -7,26 +7,25 @@ cache:
 
 stages:
   # lint and unit test on every PR to merge into develop
-  - name: lint
-    if: type = pull_request AND branch = develop
-  - name: test (unit)
+  - name: lint and unit test
     if: type = pull_request AND branch = develop
   # make a release candidate or a release
   - name: release
     if: tag IS present
-  - name: release2
-    if: tag IS present
 
 jobs:
   include:
-    - stage: lint
+    - stage: lint and unit test
       script: echo performing code analysis
-    - stage: test (unit)
-      script: echo testing...
+    - script: echo testing...
     - stage: release
-      script: echo releasing...
-    - stage: release2
-      script: echo releasing more...
+      os: osx
+      script: echo releasing osx...
+    - stage: release
+      os: linux
+      env: CC=clang CXX=clang++ npm_config_clang=1
+      compiler: clang
+      script: echo releasing linux...
 
 # notifications:
 #   slack: '<account>:<token>#team-backend'
